@@ -6,10 +6,15 @@ body {
     background-size: 2em 2em;
     height: 100vh;
     background-color: teal;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6, p {
     color: #ffffff;
+}
+
+p {
+    font-size: 8px;
 }
 
 #game-display {
@@ -36,18 +41,39 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .middle-layer {
+    display: flex;
+    flex-direction: column;
     overflow: visible;
     border: groove;
     position: relative;
     background: url('/resources/images/background.png');
     background-size: 100%;
-    background-repeat: no-repeat;
+    background-repeat: repeat-x;
 }
 
-#background-image {
-    max-width: 100%;
-    max-height: 590px;
-    object-fit: fill;
+.stat-display {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.stat-display > *{
+    min-width: 35%;
+    text-align: left;
+    margin-top: 6px;
+    border-radius: 12px;
+}
+
+.stat-display > .left-display {
+    border: solid 2px #7e2814;
+    margin-left: 15px;
+    background: linear-gradient(180deg, rgba(169,33,0,1) 0%, rgb(68, 14, 0, 1) 50%, rgba(169,33,0,1) 90%);
+}
+
+.stat-display > .right-display {
+    border: solid 2px #004992;
+    margin-right: 15px;
+    background: linear-gradient(180deg, rgba(0,13,238,0.9) 0%, rgba(0, 0, 68, 0.9) 50%, rgba(0,13,238,0.9) 90%);
 }
 
 .sprite-overlay > *{
@@ -56,7 +82,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 #left-sprite{
     top: 50px;
-    left: 10vw;
+    right: 10vw;
 }
 
 #right-sprite{
