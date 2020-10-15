@@ -1,0 +1,19 @@
+body {
+    font-size: 12px;
+    overflow: auto;
+}
+
+#game-display {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+#game-display > {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 33%;
+    height: 33%;
+}
