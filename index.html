@@ -2,46 +2,45 @@
 <html>
 <head>
     <title>Ultimate Machine Combat</title>
-    <link rel='stylesheet' href='/resources/css/style.css'>
+    <link rel='stylesheet' href='resources/css/style.css'>
 </head>
-    <body>
-        <div id='game-display'>
-            <div class='top-layer'>
-                <div class='left-display'>
-                    <p>Gunguy</p>
+<body>
+    <div id='game-display'>
+        <div class='top-layer'>
+            <div class='left-display'>
+                <p>Gunguy</p>
+            </div>
+            <div class='right-display'>
+                <p>Zack</p>
+            </div>
+        </div>
+
+        <div class='middle-layer'>
+            <div class='sprite-overlay'>
+                <img id='left-sprite' src='/resources/images/gunguy.png' height='500px' width='592px'>
+                <img id='right-sprite' src='/resources/images/zack.png' height='500px' width='592px'>
+            </div>
+        </div>
+
+        <div class='bottom-layer'>
+            <div class='left-display'>
+                <div id='enemy-selection'>
+                    <p id='enemy-output'></p>
                 </div>
-                <div class='right-display'>
-                    <p>Zack</p>
+                <div id='en-attack-name'>
+                    <p id='en-attack-output'>---</p>
                 </div>
             </div>
 
-            <div class='middle-layer'>
-                <img id='background-image'>
-                <div class='sprite-overlay'>
-                    <img id='left-sprite'>
-                    <img id='right-sprite'>
+            <div class='right-display'>
+                <div id='action-selection'>
+                    <p id='attack-output'></p>
                 </div>
-            </div>
-
-            <div class='bottom-layer'>
-                <div class='left-display'>
-                    <div id='action-selection'>
-                        <p id='action-output'></p>
-                    </div>
-                    <div id='attack-name'>
-                        <p id='attack-output'>---</p>
-                    </div>
-                </div>
-
-                <div class='right-display'>
-                    <div id='enemy-selection'>
-                        <p id='enemy-output'></p>
-                    </div>
-                    <div id='enemy-attack'>
-                        <p id='en-attack-output'>---</p>
-                    </div>
+                <div id='attack-name'>
+                    <p id='attack-output'>---</p>
                 </div>
             </div>
         </div>
+    </div>
 </body>
 </html>
