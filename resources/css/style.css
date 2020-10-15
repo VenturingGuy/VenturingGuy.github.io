@@ -27,7 +27,7 @@ p {
 }
 
 
-.top-layer, .middle-layer, .bottom-layer {
+.top-layer, .middle-layer, .bottom-layer{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -88,4 +88,10 @@ p {
 #right-sprite{
     top: 50px;
     left: 10vw;
+}
+
+.bottom-layer > *{
+    border: groove;
+    width: 33.3%;
+    background: linear-gradient(180deg, rgba(0,0,0,1) 1%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.35) 88%);
 }
