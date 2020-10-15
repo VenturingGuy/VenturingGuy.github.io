@@ -1,17 +1,18 @@
+import data from './data.js'
+
 function changeAction() {
     switch(document.getElementById('action-output').innerHTML){
         case 'Attack':
             document.getElementById('action-output').innerHTML = 'Defend'
-            changeAttack()
             break;
         case 'Defend':
             document.getElementById('action-output').innerHTML = 'Evade'
             break;
         case 'Evade':
             document.getElementById('action-output').innerHTML = 'Attack'
-            changeAttack()
             break;
     }
+    changeAttack();
 }
 
 function changeAttack() {
@@ -38,3 +39,5 @@ function changeAttack() {
         document.getElementById('attack-output').innerHTML = '---'
     }
 }
+
+console.log("HP")
