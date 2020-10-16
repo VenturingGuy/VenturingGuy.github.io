@@ -1,43 +1,49 @@
-import data from './data.js'
+import player_data from './data.js'
+
+const playerAction = document.getElementById('action-output')
+playerAction.addEventListener('click', changeAction)
+
+const playerAttack = document.getElementById('attack-output')
+playerAttack.addEventListener('click', changeAttack)
 
 function changeAction() {
-    switch(document.getElementById('action-output').innerHTML){
+    switch(playerAction.innerHTML){
         case 'Attack':
-            document.getElementById('action-output').innerHTML = 'Defend'
+            playerAction.innerHTML = 'Defend'
             break;
         case 'Defend':
-            document.getElementById('action-output').innerHTML = 'Evade'
+            playerAction.innerHTML = 'Evade'
             break;
         case 'Evade':
-            document.getElementById('action-output').innerHTML = 'Attack'
+            playerAction.innerHTML = 'Attack'
             break;
     }
-    changeAttack();
+    changeAttack()
 }
 
 function changeAttack() {
-    if (document.getElementById('action-output').innerHTML == 'Attack') {
-        switch(document.getElementById('attack-output').innerHTML){
+    if (playerAction.innerHTML == 'Attack') {
+        switch(playerAttack.innerHTML){
             case '---':
-                document.getElementById('attack-output').innerHTML = 'O Slash'
+                playerAttack.innerHTML = 'O Slash'
                 break;
             case 'O Slash':
-                document.getElementById('attack-output').innerHTML = 'O Shot'
+                playerAttack.innerHTML = 'O Shot'
                 break;
             case 'O Shot':
-                document.getElementById('attack-output').innerHTML = 'O Blow'
+                playerAttack.innerHTML = 'O Blow'
                 break;
             case 'O Blow':
-                document.getElementById('attack-output').innerHTML = 'O Finish'
+                playerAttack.innerHTML = 'O Finish'
                 break;
             case 'O Finish':
-                document.getElementById('attack-output').innerHTML = 'O Slash'
+                playerAttack.innerHTML = 'O Slash'
                 break;
         }
     }
     else {
-        document.getElementById('attack-output').innerHTML = '---'
+        playerAttack.innerHTML = '---'
     }
 }
 
-console.log("HP")
+console.log(player_data)
