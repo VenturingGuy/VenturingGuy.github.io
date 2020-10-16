@@ -1,8 +1,9 @@
 
-const player_data = {
+const data = [{
+    "ID": "player-data",
     "HP": 5600,
     "EN": 200
-}
+}]
 
 
-export default player_data;
+export default data;

@@ -1,49 +1,60 @@
 import player_data from './data.js'
 
+window.addEventListener('load', initializeStats)
+
+const playerHealth = document.getElementById('player-hp')
+const playerEnergy = document.getElementById('player-en')
+
 const playerAction = document.getElementById('action-output')
 playerAction.addEventListener('click', changeAction)
 
 const playerAttack = document.getElementById('attack-output')
 playerAttack.addEventListener('click', changeAttack)
 
+function initializeStats() {
+    let playerHP = player_data[0].HP
+    playerHealth.textContent += playerHP
+
+    let playerEN = player_data[0].EN
+    playerEnergy.textContent += playerEN
+}
+
 function changeAction() {
-    switch(playerAction.innerHTML){
+    switch(playerAction.innerText){
         case 'Attack':
-            playerAction.innerHTML = 'Defend'
+            playerAction.innerText = 'Defend'
             break;
         case 'Defend':
-            playerAction.innerHTML = 'Evade'
+            playerAction.innerText = 'Evade'
             break;
         case 'Evade':
-            playerAction.innerHTML = 'Attack'
+            playerAction.innerText = 'Attack'
             break;
     }
     changeAttack()
 }
 
 function changeAttack() {
-    if (playerAction.innerHTML == 'Attack') {
-        switch(playerAttack.innerHTML){
+    if (playerAction.innerText == 'Attack') {
+        switch(playerAttack.innerText){
             case '---':
-                playerAttack.innerHTML = 'O Slash'
+                playerAttack.innerText = 'O Slash'
                 break;
             case 'O Slash':
-                playerAttack.innerHTML = 'O Shot'
+                playerAttack.innerText = 'O Shot'
                 break;
             case 'O Shot':
-                playerAttack.innerHTML = 'O Blow'
+                playerAttack.innerText = 'O Blow'
                 break;
             case 'O Blow':
-                playerAttack.innerHTML = 'O Finish'
+                playerAttack.innerText = 'O Finish'
                 break;
             case 'O Finish':
-                playerAttack.innerHTML = 'O Slash'
+                playerAttack.innerText = 'O Slash'
                 break;
         }
     }
     else {
-        playerAttack.innerHTML = '---'
+        playerAttack.innerText = '---'
     }
 }
-
-console.log(player_data)
