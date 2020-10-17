@@ -76,6 +76,25 @@ function changeAttack() {
     }
 }
 
+function enemyTurn() {
+    playerUnit.hp -= enemyUnit.attackPotency[1]
+    if (playerUnit.hp <= 0){
+        playerUnit.hp = 0
+        console.log("OH NO")
+    }
+    playerHealth.textContent = "HP: " + playerUnit.hp
+}
+
+function playerTurn() {
+    enemyUnit.hp -= playerUnit.attackPotency[1]
+    if (enemyUnit.hp <= 0){
+        enemyUnit.hp = 0
+        console.log("OH YEAH")
+    }
+    enemyHealth.textContent = "HP: " + enemyUnit.hp
+}
+
 function fightProcess() {
-    console.log(playerUnit.attacks)
+    enemyTurn()
+    playerTurn()
 }
