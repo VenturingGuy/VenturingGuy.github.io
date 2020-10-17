@@ -1,9 +1,13 @@
-
-const data = [{
-    "ID": "player-data",
-    "HP": 5600,
-    "EN": 200
-}]
-
-
-export default data;
+export class Unit {
+    constructor(name, maxHP, maxEN, hp, en, attacks) {
+        this.name = name
+        this.maxHP = maxHP
+        this.maxEN = maxEN
+        this.hp = hp
+        this.en = en
+        this.attacks = attacks
+    }
+    getName(){
+        return this.name
+    }
+}

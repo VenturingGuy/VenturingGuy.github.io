@@ -1,9 +1,16 @@
-import player_data from './data.js'
+import {Unit} from './data.js'
 
 window.addEventListener('load', initializeStats)
 
+
+let playerUnit = new Unit("Zack", 5600, 200, 5600, 200, ["O Shot", "O Strike", "O Finish"])
+console.log(playerUnit)
+
 const playerHealth = document.getElementById('player-hp')
 const playerEnergy = document.getElementById('player-en')
+
+const enemyHealth = document.getElementById('enemy-hp')
+const enemyEnergy = document.getElementById('enemy-en')
 
 const playerAction = document.getElementById('action-output')
 playerAction.addEventListener('click', changeAction)
@@ -11,11 +18,14 @@ playerAction.addEventListener('click', changeAction)
 const playerAttack = document.getElementById('attack-output')
 playerAttack.addEventListener('click', changeAttack)
 
+const combatStart = document.getElementById('final-confirm')
+combatStart.addEventListener('click', fightProcess)
+
 function initializeStats() {
-    let playerHP = player_data[0].HP
+    let playerHP = playerUnit.hp
     playerHealth.textContent += playerHP
 
-    let playerEN = player_data[0].EN
+    let playerEN = playerUnit.en
     playerEnergy.textContent += playerEN
 }
 
@@ -36,25 +46,14 @@ function changeAction() {
 
 function changeAttack() {
     if (playerAction.innerText == 'Attack') {
-        switch(playerAttack.innerText){
-            case '---':
-                playerAttack.innerText = 'O Slash'
-                break;
-            case 'O Slash':
-                playerAttack.innerText = 'O Shot'
-                break;
-            case 'O Shot':
-                playerAttack.innerText = 'O Blow'
-                break;
-            case 'O Blow':
-                playerAttack.innerText = 'O Finish'
-                break;
-            case 'O Finish':
-                playerAttack.innerText = 'O Slash'
-                break;
-        }
+        const attackList = playerUnit.attacks
+        console.log(attackList)
     }
     else {
         playerAttack.innerText = '---'
     }
+}
+
+function fightProcess() {
+    console.log(data.playerData.Attacks)
 }
