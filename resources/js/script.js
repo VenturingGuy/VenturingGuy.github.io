@@ -5,16 +5,41 @@ window.addEventListener('load', initializeStats)
 /* Creates two instances of a class corresponding to the player
 and the enemy */
 
-let playerUnit = new Unit("Zack", 5600, 200, 5600, 200,
-["O Shot", "O Strike", "O Finish"], 
-[2500, 2800, 3500], "A", "S", "L", 80, 120, 850, 100)
+let playerUnit = new Unit({
+    name: "Zack",
+    maxHP: 5600,
+    maxEN: 200,
+    hp: 5600,
+    en: 200,
+    attacks: ["O Shot", "O Strike", "O Finish"], 
+    attackPotency: [2500, 2800, 3500],
+    pilotPerformance: "A",
+    unitPerformance: "S",
+    unitSize: "L",
+    baseAttack: 80,
+    baseDefense: 120,
+    baseArmor: 850,
+    willPower: 100})
+    
 console.log(playerUnit)
 console.log(playerUnit.hp)
 
 
-let enemyUnit = new Unit("Gunguy", 12000, 450, 12000, 450,
-["Blast Shot", "Collision"],
-[2500, 4000], "S", "S", "S", 80, 70, 200, 100)
+let enemyUnit = new Unit({
+    name: "Gunguy",
+    maxHP: 12000,
+    maxEN: 450,
+    hp: 12000,
+    en: 450,
+    attacks: ["Blast Shot", "Collision"],
+    attackPotency: [2500, 4000],
+    pilotPerformance: "S",
+    unitPerformance: "S",
+    unitSize: "S",
+    baseAttack: 80,
+    baseDefense: 70,
+    baseArmor: 200,
+    willPower: 100})
 
 /* Defines consts that correspond to HTML elements to allow
 for editing using the functions below */
@@ -37,16 +62,16 @@ combatStart.addEventListener("click", fightProcess)
 /* Sets the stats/attacks for both units to be displayed upon loading page */
 
 function initializeStats() {
-    let playerHP = playerUnit.maxHP
+    let playerHP = playerUnit.stats.maxHP
     playerHealth.textContent += playerHP
 
-    let playerEN = playerUnit.maxEN
+    let playerEN = playerUnit.stats.maxEN
     playerEnergy.textContent += playerEN
 
-    let enemyHP = enemyUnit.maxHP
+    let enemyHP = enemyUnit.stats.maxHP
     enemyHealth.textContent += enemyHP
 
-    let enemyEN = enemyUnit.maxEN
+    let enemyEN = enemyUnit.stats.maxEN
     enemyEnergy.textContent += enemyEN
 
     changeAttack()
@@ -77,7 +102,7 @@ or previous attack being the last in list */
 
 function changeAttack() {
     if (playerAction.innerText == "Attack") {
-        const attackList = playerUnit.attacks
+        const attackList = playerUnit.stats.attacks
         let selectedAttack = playerAttack.innerText
         let nextAttack = attackList.indexOf(selectedAttack) + 1
         if (playerAttack.innerText == "---" 

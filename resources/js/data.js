@@ -1,28 +1,11 @@
 export class Unit {
     /* So this kinda got out of hand. Learning experience. */
-    constructor(name, maxHP, maxEN, hp, en, attacks,
-        attackPotency, pilotPerformance, unitPerformance, unitSize,
-        attackStat, defenseStat, armorStat, willPower) {
-        this.name = name
-        this.maxHP = maxHP
-        this.maxEN = maxEN
-        this.hp = hp
-        this.en = en
-        this.attacks = attacks
-        this.attackPotency = attackPotency
-        this.pilotPerformance = pilotPerformance
-        this.unitPerformance = unitPerformance
+    constructor(params) {
+        this.stats = params
         let terrainPerformace = this.getTerrainPerformace
         this.terrainPerformance = terrainPerformace
         let totalPerformance = this.getTotalPerformance
         this.totalPerformance = totalPerformance
-        this.unitSize = unitSize
-        let sizeAdjustment = this.getSizeAdjustment
-        this.sizeAdjustment = sizeAdjustment
-        this.attackStat = attackStat
-        this.defenseStat = defenseStat
-        this.armorStat = armorStat
-        this.willPower = willPower
     }
 
     get getTerrainPerformace() {
@@ -95,25 +78,13 @@ export class Unit {
     }
 
     get getSizeAdjustment() {
-        return this.calcSizeAdjustment()
+        return this.sizeMap[this.unitSize]
     }
 
-    calcSizeAdjustment() {
-        let sizeAdjustment = 1.0
-        switch(this.unitSize){
-            case "LL":
-                sizeAdjustment = 1.4
-                break;
-            case "L":
-                sizeAdjustment = 1.2
-                break;
-            case "M":
-                sizeAdjustment = 1.0
-                break;
-            case "S":
-                sizeAdjustment = 0.8
-                break;
-        }
-        return sizeAdjustment
+    sizeMap = {
+        XL: 1.4,
+        L: 1.2,
+        M: 1.0,
+        S: 0.8
     }
 }
