@@ -1,6 +1,6 @@
 export class Unit {
     constructor(name, maxHP, maxEN, hp, en, attacks,
-        attackPotency, pilotPerformance, unitPerformance) {
+        attackPotency, pilotPerformance, unitPerformance, unitSize) {
         this.name = name
         this.maxHP = maxHP
         this.maxEN = maxEN
@@ -14,6 +14,9 @@ export class Unit {
         this.terrainPerformance = terrainPerformace
         let totalPerformance = this.getTotalPerformance
         this.totalPerformance = totalPerformance
+        this.unitSize = unitSize
+        let sizeAdjustment = this.getSizeAdjustment
+        this.sizeAdjustment = sizeAdjustment
     }
 
     get getTerrainPerformace() {
@@ -83,5 +86,28 @@ export class Unit {
             totalAdjustment = 0.4
         }
         return totalAdjustment
+    }
+
+    get getSizeAdjustment() {
+        return this.calcSizeAdjustment()
+    }
+
+    calcSizeAdjustment() {
+        let sizeAdjustment = 1.0
+        switch(this.unitSize){
+            case "LL":
+                sizeAdjustment = 1.4
+                break;
+            case "L":
+                sizeAdjustment = 1.2
+                break;
+            case "M":
+                sizeAdjustment = 1.0
+                break;
+            case "S":
+                sizeAdjustment = 0.8
+                break;
+        }
+        return sizeAdjustment
     }
 }

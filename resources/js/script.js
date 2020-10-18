@@ -7,14 +7,14 @@ and the enemy */
 
 let playerUnit = new Unit("Zack", 5600, 200, 5600, 200,
 ["O Shot", "O Strike", "O Finish"], 
-[2500, 2800, 3500], "A", "S")
+[2500, 2800, 3500], "A", "S", "L")
 console.log(playerUnit)
 console.log(playerUnit.hp)
 
 
 let enemyUnit = new Unit("Gunguy", 12000, 450, 12000, 450,
 ["Blast Shot", "Collision"],
-[2500, 4000], "S", "S")
+[2500, 4000], "S", "S", "S")
 
 /* Defines consts that correspond to HTML elements to allow
 for editing using the functions below */
