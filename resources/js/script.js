@@ -2,15 +2,22 @@ import {Unit} from './data.js'
 
 window.addEventListener('load', initializeStats)
 
+/* Creates two instances of a class corresponding to the player
+and the enemy */
 
 let playerUnit = new Unit("Zack", 5600, 200, 5600, 200,
 ["O Shot", "O Strike", "O Finish"], 
-[2500, 2800, 3500])
+[2500, 2800, 3500], "A", "S")
+console.log(playerUnit)
+console.log(playerUnit.hp)
 
 
 let enemyUnit = new Unit("Gunguy", 12000, 450, 12000, 450,
 ["Blast Shot", "Collision"],
-[2500, 4000])
+[2500, 4000], "S", "S")
+
+/* Defines consts that correspond to HTML elements to allow
+for editing using the functions below */
 
 const playerHealth = document.getElementById("player-hp")
 const playerEnergy = document.getElementById("player-en")
@@ -26,6 +33,8 @@ playerAttack.addEventListener("click", changeAttack)
 
 const combatStart = document.getElementById("final-confirm")
 combatStart.addEventListener("click", fightProcess)
+
+/* Sets the stats/attacks for both units to be displayed upon loading page */
 
 function initializeStats() {
     let playerHP = playerUnit.hp
@@ -43,6 +52,9 @@ function initializeStats() {
     changeAttack()
 }
 
+/* Manages display of which action player switches to onclick,
+calls changeAttack to display blank */
+
 function changeAction() {
     switch(playerAction.innerText){
         case "Attack":
@@ -57,6 +69,11 @@ function changeAction() {
     }
     changeAttack()
 }
+
+/* Changes attack onclick based on instanced class list of attacks,
+displays blank if not attacking,
+switches to first attack on action being attack
+or previous attack being the last in list */
 
 function changeAttack() {
     if (playerAction.innerText == "Attack") {
