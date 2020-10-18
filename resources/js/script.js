@@ -7,14 +7,14 @@ and the enemy */
 
 let playerUnit = new Unit("Zack", 5600, 200, 5600, 200,
 ["O Shot", "O Strike", "O Finish"], 
-[2500, 2800, 3500], "A", "S", "L")
+[2500, 2800, 3500], "A", "S", "L", 80, 120, 850, 100)
 console.log(playerUnit)
 console.log(playerUnit.hp)
 
 
 let enemyUnit = new Unit("Gunguy", 12000, 450, 12000, 450,
 ["Blast Shot", "Collision"],
-[2500, 4000], "S", "S", "S")
+[2500, 4000], "S", "S", "S", 80, 70, 200, 100)
 
 /* Defines consts that correspond to HTML elements to allow
 for editing using the functions below */
@@ -37,16 +37,16 @@ combatStart.addEventListener("click", fightProcess)
 /* Sets the stats/attacks for both units to be displayed upon loading page */
 
 function initializeStats() {
-    let playerHP = playerUnit.hp
+    let playerHP = playerUnit.maxHP
     playerHealth.textContent += playerHP
 
-    let playerEN = playerUnit.en
+    let playerEN = playerUnit.maxEN
     playerEnergy.textContent += playerEN
 
-    let enemyHP = enemyUnit.hp
+    let enemyHP = enemyUnit.maxHP
     enemyHealth.textContent += enemyHP
 
-    let enemyEN = enemyUnit.en
+    let enemyEN = enemyUnit.maxEN
     enemyEnergy.textContent += enemyEN
 
     changeAttack()
@@ -94,12 +94,27 @@ function changeAttack() {
 }
 
 function enemyTurn() {
-    playerUnit.hp -= enemyUnit.attackPotency[1]
+    /* weaponAttack * ((attack stat + enemyWill)/200) * weaponPerformance */
+    let baseAttack = enemyUnit.attackPotency[1] 
+    * ((enemyUnit.attackStat + enemyUnit.willPower)/200)
+    * enemyUnit.totalPerformance
+
+    console.log(baseAttack)
+    /* unitArmor * ((playerDefense + playerWill)/200) * playerSizeAdjustment */
+    let baseDefense = playerUnit.armorStat 
+    * ((playerUnit.defenseStat + playerUnit.willPower)/200) 
+    * playerUnit.sizeAdjustment
+
+    console.log(baseDefense)
+    /* (baseAttack-baseDefense) * ((100 * player.totalPerformance)/100) */
+    let finalDamage = Math.round((baseAttack - baseDefense) * ((100 * playerUnit.totalPerformance)/100))
+    console.log(finalDamage)
+    playerUnit.hp -= finalDamage
     if (playerUnit.hp <= 0){
         playerUnit.hp = 0
         console.log("OH NO")
     }
-    playerHealth.textContent = "HP: " + playerUnit.hp
+    playerHealth.textContent = "HP: " + playerUnit.hp + " / " + playerUnit.maxHP
 }
 
 function playerTurn() {

@@ -1,6 +1,8 @@
 export class Unit {
+    /* So this kinda got out of hand. Learning experience. */
     constructor(name, maxHP, maxEN, hp, en, attacks,
-        attackPotency, pilotPerformance, unitPerformance, unitSize) {
+        attackPotency, pilotPerformance, unitPerformance, unitSize,
+        attackStat, defenseStat, armorStat, willPower) {
         this.name = name
         this.maxHP = maxHP
         this.maxEN = maxEN
@@ -17,6 +19,10 @@ export class Unit {
         this.unitSize = unitSize
         let sizeAdjustment = this.getSizeAdjustment
         this.sizeAdjustment = sizeAdjustment
+        this.attackStat = attackStat
+        this.defenseStat = defenseStat
+        this.armorStat = armorStat
+        this.willPower = willPower
     }
 
     get getTerrainPerformace() {
