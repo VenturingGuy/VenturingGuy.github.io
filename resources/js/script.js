@@ -13,16 +13,17 @@ let playerUnit = new Unit({
     en: 200,
     attacks: ["O Shot", "O Strike", "O Finish"], 
     attackPotency: [2500, 2800, 3500],
+    attackCost: [20, 35, 50],
     pilotPerformance: "A",
     unitPerformance: "S",
     unitSize: "L",
-    baseAttack: 80,
-    baseDefense: 120,
-    baseArmor: 850,
+    attackStat: 80,
+    defenseStat: 120,
+    armorStat: 850,
     willPower: 100})
-    
+
 console.log(playerUnit)
-console.log(playerUnit.hp)
+console.log(playerUnit.stats.hp)
 
 
 let enemyUnit = new Unit({
@@ -33,12 +34,13 @@ let enemyUnit = new Unit({
     en: 450,
     attacks: ["Blast Shot", "Collision"],
     attackPotency: [2500, 4000],
+    attackCost: [40, 70],
     pilotPerformance: "S",
     unitPerformance: "S",
     unitSize: "S",
-    baseAttack: 80,
-    baseDefense: 70,
-    baseArmor: 200,
+    attackStat: 80,
+    defenseStat: 70,
+    armorStat: 200,
     willPower: 100})
 
 /* Defines consts that correspond to HTML elements to allow
@@ -56,25 +58,16 @@ playerAction.addEventListener("click", changeAction)
 const playerAttack = document.getElementById("attack-output")
 playerAttack.addEventListener("click", changeAttack)
 
+const enemyAttack = document.getElementById("en-attack-output")
+
 const combatStart = document.getElementById("final-confirm")
 combatStart.addEventListener("click", fightProcess)
 
 /* Sets the stats/attacks for both units to be displayed upon loading page */
 
 function initializeStats() {
-    let playerHP = playerUnit.stats.maxHP
-    playerHealth.textContent += playerHP
-
-    let playerEN = playerUnit.stats.maxEN
-    playerEnergy.textContent += playerEN
-
-    let enemyHP = enemyUnit.stats.maxHP
-    enemyHealth.textContent += enemyHP
-
-    let enemyEN = enemyUnit.stats.maxEN
-    enemyEnergy.textContent += enemyEN
-
     changeAttack()
+    updateStats()
 }
 
 /* Manages display of which action player switches to onclick,
@@ -118,40 +111,69 @@ function changeAttack() {
     }
 }
 
-function enemyTurn() {
+function damageCalculation(unit1, unit2, attackChoice) {
     /* weaponAttack * ((attack stat + enemyWill)/200) * weaponPerformance */
-    let baseAttack = enemyUnit.attackPotency[1] 
-    * ((enemyUnit.attackStat + enemyUnit.willPower)/200)
-    * enemyUnit.totalPerformance
-
+    const attackList = unit1.stats.attacks
+    let attackNumber = attackList.indexOf(attackChoice)
+    let baseAttack = unit1.stats.attackPotency[attackNumber]
+    * ((unit1.stats.attackStat + unit1.stats.willPower)/200)
+    * unit1.stats.totalPerformance
     console.log(baseAttack)
     /* unitArmor * ((playerDefense + playerWill)/200) * playerSizeAdjustment */
-    let baseDefense = playerUnit.armorStat 
-    * ((playerUnit.defenseStat + playerUnit.willPower)/200) 
-    * playerUnit.sizeAdjustment
+    let baseDefense = unit2.stats.armorStat
+    * ((unit2.stats.defenseStat + unit2.stats.willPower)/200)
+    * unit2.stats.sizeAdjustment
+ 
 
-    console.log(baseDefense)
     /* (baseAttack-baseDefense) * ((100 * player.totalPerformance)/100) */
-    let finalDamage = Math.round((baseAttack - baseDefense) * ((100 * playerUnit.totalPerformance)/100))
-    console.log(finalDamage)
-    playerUnit.hp -= finalDamage
-    if (playerUnit.hp <= 0){
-        playerUnit.hp = 0
+    let finalDamage = Math.round((baseAttack - baseDefense)
+    *((100 * unit2.stats.totalPerformance)/100))
+
+    unit1.stats.willPower += 3
+    if (unit1.stats.willPower >= 150){
+        unit1.stats.willPower = 150
+    }
+    unit1.stats.en -= unit1.stats.attackCost[attackNumber]
+    if (unit1.stats.en <= 0){
+        unit1.stats.en = 0
+    }
+    unit2.stats.willPower += 5
+    if (unit2.stats.willPower >= 150){
+        unit2.stats.willPower = 150
+    }
+    unit2.stats.hp -= finalDamage
+}
+
+function changeEnemyAttack() {
+    let attackList = enemyUnit.stats.attacks
+    let chosenAttack = attackList[Math.floor(Math.random() * attackList.length)]
+    return chosenAttack
+}
+
+function enemyTurn() {
+    damageCalculation(enemyUnit, playerUnit, enemyAttack.innerText)
+    if (playerUnit.stats.hp <= 0){
+        playerUnit.stats.hp = 0
         console.log("OH NO")
     }
-    playerHealth.textContent = "HP: " + playerUnit.hp + " / " + playerUnit.maxHP
 }
 
 function playerTurn() {
-    enemyUnit.hp -= playerUnit.attackPotency[1]
-    if (enemyUnit.hp <= 0){
-        enemyUnit.hp = 0
-        console.log("OH YEAH")
-    }
-    enemyHealth.textContent = "HP: " + enemyUnit.hp
+    damageCalculation(playerUnit, enemyUnit, playerAttack.innerText)
 }
+
+function updateStats() {
+    playerHealth.textContent = "HP: " + playerUnit.stats.hp + " / " + playerUnit.stats.maxHP
+    enemyHealth.textContent = "HP: " + enemyUnit.stats.hp + " / " + enemyUnit.stats.maxHP
+    playerEnergy.textContent = "EN: " + playerUnit.stats.en + " / " + playerUnit.stats.maxEN
+    enemyEnergy.textContent = "EN: " + enemyUnit.stats.en + " / " + enemyUnit.stats.maxEN
+
+    enemyAttack.innerText = changeEnemyAttack()
+}
+
 
 function fightProcess() {
     enemyTurn()
     playerTurn()
+    updateStats()
 }
