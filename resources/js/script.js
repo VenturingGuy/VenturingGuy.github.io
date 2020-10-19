@@ -2,6 +2,8 @@ import {Unit} from './data.js'
 
 window.addEventListener('load', initializeStats)
 
+var timeout
+
 /* Creates two instances of a class corresponding to the player
 and the enemy */
 
@@ -179,8 +181,11 @@ function enemyTurn() {
 }
 
 function playerTurn() {
-    displayMessage.innerText = (playerUnit.stats.name + ": Here I go!")
     damageCalculation(playerUnit, enemyUnit, playerAttack.innerText)
+    displayDiv.style = 
+    "background: linear-gradient(180deg, rgba(169,33,0,1) 0%, rgb(68, 14, 0, 1) 50%, rgba(169,33,0,1) 90%);"
+    + "border: solid 2px #7e2814;";
+    displayMessage.innerText = (enemyUnit.stats.name + ": Not bad!")
 }
 
 function updateStats() {
@@ -227,22 +232,27 @@ function evasionCheck(unit1, unit2) {
 }
 
 function fightProcess() {
+    clearTimeout(timeout)
     let fightStart = evasionCheck(enemyUnit, playerUnit)
     displayDiv.style = 
     "background: linear-gradient(180deg, rgba(169,33,0,1) 0%, rgb(68, 14, 0, 1) 50%, rgba(169,33,0,1) 90%);"
-    + "border: solid 2px #7e2814;"
+    + "border: solid 2px #7e2814;";
     displayMessage.innerText = (enemyUnit.stats.name + ": Take this!")
-    if (fightStart == true){
-        enemyTurn()
-        updateStats()
-    }
-    else{
-        displayMessage.innerText = (enemyUnit.stats.name + ": I missed!?")
-    }
+    
+    timeout = setTimeout(function() {
+            if (fightStart == true){
+            enemyTurn()
+            updateStats()
+        }
+        else{
+            displayMessage.innerText = (enemyUnit.stats.name + ": I missed!?")
+        }
+    }, 3000)
+    clearTimeout(timeout)
     fightStart = evasionCheck(playerUnit, enemyUnit)
     if (fightStart == true){
-        setTimeout(playerTurn, 3000)
-        updateStats()
+        displayMessage.innerText = (playerUnit.stats.name + ": Here I go!")
+        timeout = setTimeout(playerTurn, updateStats, 3000)
     }
     else  {
         displayMessage.innerText = (playerUnit.stats.name + ": How did I miss!?")
