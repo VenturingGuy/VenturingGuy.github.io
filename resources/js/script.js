@@ -245,6 +245,6 @@ function fightProcess() {
         updateStats()
     }
     else  {
-        displayMessage.innerText = (enemyUnit.stats.name + ": How did I miss!?")
+        displayMessage.innerText = (playerUnit.stats.name + ": How did I miss!?")
     }
 }
