@@ -167,21 +167,18 @@ function changeEnemyAttack() {
 }
 
 function enemyTurn() {
-    displayDiv.style = 
-    "background: linear-gradient(180deg, rgba(169,33,0,1) 0%, rgb(68, 14, 0, 1) 50%, rgba(169,33,0,1) 90%);"
-    + "border: solid 2px #7e2814;"
-    displayMessage.innerText = (enemyUnit.stats.name + ": Take this!")
     damageCalculation(enemyUnit, playerUnit, enemyAttack.innerText)
     if (playerUnit.stats.hp <= 0){
         playerUnit.stats.hp = 0
         console.log("OH NO")
     }
-}
-
-function playerTurn() {
     displayDiv.style =
     "border: solid 2px #004992;" +
     "background: linear-gradient(180deg, rgba(0,13,238,0.9) 0%, rgba(0, 0, 68, 0.9) 50%, rgba(0,13,238,0.9) 90%)"
+    displayMessage.innerText = (playerUnit.stats.name + ": Agh!")
+}
+
+function playerTurn() {
     displayMessage.innerText = (playerUnit.stats.name + ": Here I go!")
     damageCalculation(playerUnit, enemyUnit, playerAttack.innerText)
 }
@@ -231,13 +228,23 @@ function evasionCheck(unit1, unit2) {
 
 function fightProcess() {
     let fightStart = evasionCheck(enemyUnit, playerUnit)
+    displayDiv.style = 
+    "background: linear-gradient(180deg, rgba(169,33,0,1) 0%, rgb(68, 14, 0, 1) 50%, rgba(169,33,0,1) 90%);"
+    + "border: solid 2px #7e2814;"
+    displayMessage.innerText = (enemyUnit.stats.name + ": Take this!")
     if (fightStart == true){
         enemyTurn()
         updateStats()
     }
+    else{
+        displayMessage.innerText = (enemyUnit.stats.name + ": I missed!?")
+    }
     fightStart = evasionCheck(playerUnit, enemyUnit)
     if (fightStart == true){
-        playerTurn()
+        setTimeout(playerTurn, 3000)
         updateStats()
+    }
+    else  {
+        displayMessage.innerText = (enemyUnit.stats.name + ": How did I miss!?")
     }
 }
