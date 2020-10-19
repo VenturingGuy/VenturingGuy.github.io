@@ -96,14 +96,14 @@ p {
     background: linear-gradient(180deg, rgba(0,0,0,1) 1%, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.35) 88%);
 }
 
-.battle-log {
+#battle-log {
     background:linear-gradient(180deg, rgba(0,13,238,0.9) 0%, rgba(0, 0, 68, 0.9) 50%, rgba(0,13,238,0.9) 90%);
     border: solid 2px #004992;
     text-align: left;
     padding-bottom: 1em;
 }
 
-.battle-log p {
+#battle-log p {
     margin-left: 16px;
 }
 

@@ -6,6 +6,7 @@ export class Unit {
         + this.terrainMap[this.stats.unitPerformance]
         this.stats.totalPerformance = this.totalMap[this.stats.terrainPerformance]
         this.stats.sizeAdjustment = this.sizeMap[this.stats.unitSize]
+        this.stats.weaponTerrain = this.weaponMap[this.stats.weaponPerformance]
     }
     
     terrainMap = {
@@ -33,5 +34,13 @@ export class Unit {
         L: 1.2,
         M: 1.0,
         S: 0.8
+    }
+
+    weaponMap = {
+        S: 1.1,
+        A: 1.0,
+        B: 0.9,
+        C: 0.8,
+        D: 0.4
     }
 }
