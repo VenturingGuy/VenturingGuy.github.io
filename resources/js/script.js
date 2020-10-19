@@ -23,7 +23,7 @@ let playerUnit = new Unit({
     attackStat: 80,
     defenseStat: 120,
     armorStat: 850,
-    evadeStat: 145,
+    evadeStat: 85,
     mobilityStat: 60,
     accuracyStat: 90,
     willPower: 100})
@@ -46,7 +46,7 @@ let enemyUnit = new Unit({
     attackStat: 80,
     defenseStat: 70,
     evadeStat: 130,
-    accuracyStat: 80,
+    accuracyStat: 65,
     armorStat: 200,
     mobilityStat: 40,
     willPower: 100})
@@ -170,14 +170,15 @@ function changeEnemyAttack() {
 
 function enemyTurn() {
     damageCalculation(enemyUnit, playerUnit, enemyAttack.innerText)
-    if (playerUnit.stats.hp <= 0){
-        playerUnit.stats.hp = 0
-        console.log("OH NO")
-    }
     displayDiv.style =
     "border: solid 2px #004992;" +
     "background: linear-gradient(180deg, rgba(0,13,238,0.9) 0%, rgba(0, 0, 68, 0.9) 50%, rgba(0,13,238,0.9) 90%)"
     displayMessage.innerText = (playerUnit.stats.name + ": Agh!")
+    if (playerUnit.stats.hp <= 0){
+        playerUnit.stats.hp = 0
+        console.log("OH NO")
+    }
+    updateStats()
 }
 
 function playerTurn() {
@@ -186,6 +187,11 @@ function playerTurn() {
     "background: linear-gradient(180deg, rgba(169,33,0,1) 0%, rgb(68, 14, 0, 1) 50%, rgba(169,33,0,1) 90%);"
     + "border: solid 2px #7e2814;";
     displayMessage.innerText = (enemyUnit.stats.name + ": Not bad!")
+    if (enemyUnit.stats.hp <= 0){
+        enemyUnit.stats.hp = 0
+        console.log("OH YEAH")
+    }
+    updateStats()
 }
 
 function updateStats() {
@@ -213,12 +219,14 @@ function fightConfirm(){
 
 function evasionCheck(unit1, unit2) {
     const baseHit = ((unit1.stats.accuracyStat / 2) + 140)
-    * (unit1.stats.totalPerformance + unit1.stats.weaponTerrain)
+    * unit1.stats.totalPerformance 
+    + unit1.stats.weaponTerrain
+    console.log(baseHit)
     const baseEvade = ((unit2.stats.evadeStat/2) + unit2.stats.mobilityStat)
     * (unit2.stats.totalPerformance)
-
+    console.log(baseEvade)
     const finalHit = Math.round((baseHit + baseEvade)
-        * (unit2.stats.sizeAdjustment - (unit2.stats.totalPerformance * 0.6)))
+        * (unit2.stats.sizeAdjustment - (unit2.stats.totalPerformance * 0.9)))
         
     console.log(finalHit)
     let failChance = Math.floor(Math.random() * 100) + 1
@@ -233,28 +241,26 @@ function evasionCheck(unit1, unit2) {
 
 function fightProcess() {
     clearTimeout(timeout)
-    let fightStart = evasionCheck(enemyUnit, playerUnit)
     displayDiv.style = 
     "background: linear-gradient(180deg, rgba(169,33,0,1) 0%, rgb(68, 14, 0, 1) 50%, rgba(169,33,0,1) 90%);"
     + "border: solid 2px #7e2814;";
     displayMessage.innerText = (enemyUnit.stats.name + ": Take this!")
     
     timeout = setTimeout(function() {
-            if (fightStart == true){
+        if (evasionCheck(enemyUnit, playerUnit) == true){
             enemyTurn()
-            updateStats()
         }
-        else{
+        else if(evasionCheck(enemyUnit, playerUnit) == false){
             displayMessage.innerText = (enemyUnit.stats.name + ": I missed!?")
         }
-    }, 3000)
-    clearTimeout(timeout)
-    fightStart = evasionCheck(playerUnit, enemyUnit)
-    if (fightStart == true){
+    }, 1000)
+    timeout = setTimeout(function() {
         displayMessage.innerText = (playerUnit.stats.name + ": Here I go!")
-        timeout = setTimeout(playerTurn, updateStats, 3000)
-    }
-    else  {
-        displayMessage.innerText = (playerUnit.stats.name + ": How did I miss!?")
-    }
+        if (evasionCheck(enemyUnit, playerUnit)){
+        timeout = setTimeout(playerTurn, updateStats, 6000)
+        }
+        else  {
+            displayMessage.innerText = (playerUnit.stats.name + ": How did I miss!?")
+        }
+    }, 3000)
 }
